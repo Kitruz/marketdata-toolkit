@@ -1,5 +1,6 @@
 import yfinance as yf
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # Input
 def client_input():
@@ -35,8 +36,20 @@ def calculate_indicators(hist):
     parameters: hist (DataFrame) - must contain a 'Close' column.
     return: hist (DataFrame) - same data, with MA50 and MA200 columns added. 
     '''
+    # Simple Moving Averages (SMA) 50 & 200
     hist['MA50'] = hist['Close'].rolling(50).mean()
     hist['MA200'] = hist['Close'].rolling(200).mean()
+
+    # Calculate Relative-Strength Index (RSI)
+    delta = hist['Close'].diff()
+    gain = delta.where(delta > 0, 0)
+    loss = -delta.where(delta < 0, 0)
+
+    avg_gain = gain.rolling(14).mean()
+    avg_loss = loss.rolling(14).mean()
+
+    rs = avg_gain / avg_loss
+    hist['RSI'] = 100 - (100 / (1+rs))
 
     return hist
 
@@ -49,6 +62,11 @@ def generate_signals(hist):
     '''
     hist['buy_signal'] = (hist['MA50'] > hist['MA200']) & (hist['MA50'].shift(1) <= hist['MA200'].shift(1))
     hist['sell_signal'] = (hist['MA50'] < hist['MA200']) & (hist['MA50'].shift(1) >= hist['MA200'].shift(1))
+
+    # RSI Signal
+    oversold = hist['RSI'] <= 30
+    overbought = hist['RSI'] >= 70
+
 
     return hist
 
@@ -63,6 +81,7 @@ def run_backtest(hist, initial_cash = 1000):
     cash = initial_cash
     shares = 0
     book_value = 0
+    shares_bought = 0
 
     for date, row in hist.iterrows():
         price = row['Close']
@@ -81,7 +100,7 @@ def run_backtest(hist, initial_cash = 1000):
             cash += proceeds
             shares = 0
             book_value = 0
-            print("\n", date, "SELL", "cash now", round(cash, 2), "realized gain/loss:", round(realized_value, 2))
+            print("\n", date, "SELL", round(shares_bought, 2), "shares @", "$", round(price, 2), "Realized gain/loss:", round(realized_value, 2))
 
     return cash, shares, book_value
 
