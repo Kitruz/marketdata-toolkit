@@ -1,8 +1,21 @@
 import yfinance as yf
 import pandas as pd
 
+# Input
+def client_input():
+    '''
+    purpose: function that gathers input when needed
+    parameters: None
+    return: ticker_symbol (str) - used to scrape information. 
+            period (str) - used to gather time period of information.
+    '''
+    ticker_symbol = input("Enter ticker symbol: ").upper()
+    period = input("Enter period (e.g. 2y, 1y, 6mo, 3mo, 1mo): ")
+
+    return ticker_symbol, period
+
 # Pull data
-def pull_data(ticker_symbol, period = "2y"):
+def pull_data(ticker_symbol, period):
     '''
     purpose: get raw historical price data from one ticker from yfinance
     parameter: ticker_symbol (str) - e.g. "AAPL". period (str) - e.g. "2y".
@@ -12,7 +25,7 @@ def pull_data(ticker_symbol, period = "2y"):
     hist = ticker.history(period = period)
     hist = hist.dropna(subset = ['Close'])
 
-    return hist
+    return hist 
 
 
 # Indicators
@@ -40,11 +53,11 @@ def generate_signals(hist):
     return hist
 
 # Engine skeleton
-def run_backtest(hist, initial_cash = 1000, buy_pct = 0.25):
+def run_backtest(hist, initial_cash = 1000):
     '''
     purpose: walk through data day by day, simulating buys and sells.
     parameters: hist(DataFrame) - must contain buy_signal and sell_signal columns. 
-                intial_cash(float) - starting cash. buy_pct(float) - percentage of cash to spend on each buy.
+                initial_cash(float) - starting cash.
     return: cash(float), shares(float), book_value(float) - ending state after the full simulation.
     '''
     cash = initial_cash
@@ -54,12 +67,13 @@ def run_backtest(hist, initial_cash = 1000, buy_pct = 0.25):
     for date, row in hist.iterrows():
         price = row['Close']
 
-        if row['buy_signal'] and cash > 0:
-            spend = cash * buy_pct
-            shares += spend / price
+        if row['buy_signal'] and cash >= price:
+            spend = price
+            shares_bought = spend / price
+            shares += shares_bought
             cash -= spend
             book_value += spend
-            print(date, "BUY", round(spend, 2), "cash left:", round (cash, 2))
+            print("\n", date, "BUY", round(shares, 2), "shares @", "$",round(price, 2))
 
         elif row['sell_signal'] and shares > 0:
             proceeds = shares * price
@@ -67,7 +81,7 @@ def run_backtest(hist, initial_cash = 1000, buy_pct = 0.25):
             cash += proceeds
             shares = 0
             book_value = 0
-            print(date, "SELL", "cash now", round(cash, 2), "realized gain/loss:", round(realized_value, 2))
+            print("\n", date, "SELL", "cash now", round(cash, 2), "realized gain/loss:", round(realized_value, 2))
 
     return cash, shares, book_value
 
@@ -102,8 +116,12 @@ def summarize_results(hist, cash, shares, book_value, initial_cash):
 # Main function
 def run_engine():
     '''
+    purpose: call the helper functions to run the backtest engine.
+    parameters: None
+    return: None - this function only prints
     '''
-    hist = pull_data("AAPL")
+    ticker_symbol, period = client_input()
+    hist = pull_data(ticker_symbol, period)
     hist = calculate_indicators(hist)
     hist = generate_signals(hist)
     cash, shares, book_value = run_backtest(hist)
