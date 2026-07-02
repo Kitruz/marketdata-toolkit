@@ -15,7 +15,7 @@ A Python-based backtesting engine that pulls historical data, calcualates indica
 - RSI is calculated but implementation of buy/sell signal WIP
 
 ## Roadmap
-1. Multiple ticker support
+1. Work on known problems, and optimize.
 2.  Build strategy abstraction, strategy interface, and make rules configurable instead of hard-coded. 
 3. Implement Realistic Trade Simulation
     - Track cash, positions, cost basis, realized, portfolio value.
@@ -25,3 +25,11 @@ A Python-based backtesting engine that pulls historical data, calcualates indica
     - Compute total return, drawdown, and risk-adjusted metric
     - Store results in object rather print statements
 
+# Ideas
+- Strategy Report: 1. Period (Trading Start Date, End Date, and Perpiod Run)
+                   2. Metrics (Starting Capital, Final Equity, Total Return, SPY Benchmark
+                               CAGR, Win Rate, Biggest Win/Loss, Average P&L, Avg Holding Time, Max Drawdown, Sharpe Ratio)
+                   3. Trades (Total, Long, Short)
+
+# Implemented
+- Multi ticker support
