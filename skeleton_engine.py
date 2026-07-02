@@ -104,6 +104,31 @@ def run_backtest(hist, initial_cash = 1000):
 
     return cash, shares, book_value
 
+# Plot Ticker, Strategy, and Signals
+def plot_ticker(hist, ticker_symbol):
+    '''
+    purpose: plot the closing price, MAs, and buy/sell signals for a given ticker.
+    parameters: hist (DataFrame) - must contain Close, MA50, MA200, buy_signal, and sell_signal columns. 
+                ticker_symbol (str) - used for chart title.
+    return: None
+    '''
+    plt.figure(figsize = (12, 6))
+    plt.plot(hist.index, hist['Close'], label = 'Close', alpha = 0.7)
+    plt.plot(hist.index, hist['MA50'], label = 'MA50', color = "green")
+    plt.plot(hist.index, hist['MA200'], label = 'MA200', color = "red")
+
+    buys = hist[hist['buy_signal']]
+    sells = hist[hist['sell_signal']]
+
+    plt.scatter(buys.index, buys['Close'], 
+                color = 'green', marker = '^', s = 100, label = 'Buy', zorder = 5)
+    plt.scatter(sells.index, sells['Close'], 
+                color = 'red', marker = 'v', s = 100, label = 'Sell', zorder = 5)
+    
+    plt.title({ticker_symbol})
+    plt.legend()
+    plt.show()
+
 # Summarize Results
 def summarize_results(hist, cash, shares, book_value, initial_cash):
     '''
