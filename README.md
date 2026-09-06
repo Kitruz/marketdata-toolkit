@@ -15,12 +15,13 @@ A Python-based backtesting engine that pulls historical data, calculates indicat
 
 ## Roadmap
 1. Work on known problems, and optimize via data abstraction and encapsulation.
-2. Modulize indicators, and signals. 
-3. Implement Realistic Trade Simulation
+2. Learn to use GitHub more efficiently. 
+3. Modulize indicators, and signals. 
+4. Implement Realistic Trade Simulation
     - Track cash, positions, cost basis, realized, portfolio value.
     - Transactions cost or FX Risk, and slippage assumptions.
     - Rid of buy one share logic; use position sizing.
-4. Add Evaluation Metrics
+5. Add Evaluation Metrics
     - Compute total return, drawdown, and risk-adjusted metric
     - Store results in object rather print statements
 
