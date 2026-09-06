@@ -11,12 +11,11 @@ A Python-based backtesting engine that pulls historical data, calculates indicat
 ## Know problems
 - Need to find solution to "dead zone", wheras since you only scraped data of a given period.
   If you calculate MA200 it wont pick up till after 200 days.
-- Single ticker only - multi-ticker WIP
 - RSI is calculated but implementation of buy/sell signal WIP
 
 ## Roadmap
-1. Work on known problems, and optimize.
-2.  Build strategy abstraction, strategy interface, and make rules configurable instead of hard-coded. 
+1. Work on known problems, and optimize via data abstraction and encapsulation.
+2. Modulize indicators, and signals. 
 3. Implement Realistic Trade Simulation
     - Track cash, positions, cost basis, realized, portfolio value.
     - Transactions cost or FX Risk, and slippage assumptions.
