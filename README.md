@@ -1,5 +1,5 @@
 # marketdata-toolkit
-A Python-based backtesting engine that pulls historical data, calcualates indicators, generates buy/sell signal, and si,ulates a portfolio to test trading strategies.
+A Python-based backtesting engine that pulls historical data, calculates indicators, generates buy/sell signal, and simulates a portfolio to test trading strategies.
 
 ## What it does
 - Scrapes data for given ticker using yfinance libary
