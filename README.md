@@ -1,5 +1,5 @@
 # marketdata-toolkit
-A Python-based backtesting engine that pulls historical data, calcualates indicators, generates buy/sell signal, and si,ulates a portfolio to test trading strategies.
+A Python-based backtesting engine that pulls historical data, calculates indicators, generates buy/sell signal, and simulates a portfolio to test trading strategies.
 
 ## What it does
 - Scrapes data for given ticker using yfinance libary
@@ -11,17 +11,17 @@ A Python-based backtesting engine that pulls historical data, calcualates indica
 ## Know problems
 - Need to find solution to "dead zone", wheras since you only scraped data of a given period.
   If you calculate MA200 it wont pick up till after 200 days.
-- Single ticker only - multi-ticker WIP
 - RSI is calculated but implementation of buy/sell signal WIP
 
 ## Roadmap
-1. Work on known problems, and optimize.
-2.  Build strategy abstraction, strategy interface, and make rules configurable instead of hard-coded. 
-3. Implement Realistic Trade Simulation
+1. Work on known problems, and optimize via data abstraction and encapsulation.
+2. Learn to use GitHub more efficiently. 
+3. Modulize indicators, and signals. 
+4. Implement Realistic Trade Simulation
     - Track cash, positions, cost basis, realized, portfolio value.
     - Transactions cost or FX Risk, and slippage assumptions.
     - Rid of buy one share logic; use position sizing.
-4. Add Evaluation Metrics
+5. Add Evaluation Metrics
     - Compute total return, drawdown, and risk-adjusted metric
     - Store results in object rather print statements
 
