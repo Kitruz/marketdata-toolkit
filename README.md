@@ -27,3 +27,4 @@ A Python-based backtesting engine that pulls historical data, calculates indicat
 
 # Implemented
 - Multi ticker support
+- OOP, Data Abstraction and Encapsulation
