@@ -9,11 +9,10 @@ A Python-based backtesting engine that pulls historical data, calculates indicat
 - Plots price, indicators, and signals to visually verify results
 
 ## Roadmap
-1. Working on implementing OOP architecture, separating intent and state between objects. Finish first rough version. 
-2. Add Evaluation Metrics to evaluate portfolio performance. 
-    - Return total return, risk-adjusted, sharpe.
-3. Work on data pipeline, make sure data is accurate and reliable. 
-3. Implement realistic accounting
+1. Fix RSI overshoot, adjust its weights. Fix MA deadzone, figure out how to append needed data. Order size allocation.
+2. Start work on dashboard/UI.
+3. Optimize data structure. 
+4. Implement realistic accounting
     - Add FX, fees, slippage between order and execution. 
 
 # Ideas
